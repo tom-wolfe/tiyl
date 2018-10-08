@@ -1,11 +1,11 @@
 import { Alignment, Alignments } from './alignment';
-import { Background, Backgrounds, Ideal } from './background';
+import { Backgrounds, Background } from './background';
 import { Birth } from './birth';
-import { Class, Classes } from './class';
+import { Classes, Class } from './class';
 import { Family, Lifestyle, Parents, RaisedBy, Sibling } from './family';
 import { Items } from './item';
 import { Life } from './life';
-import { Race, Races, Subrace } from './race';
+import { Races, Race, Subrace } from './race';
 
 export interface Config {
   age: number;
@@ -20,23 +20,17 @@ export interface Config {
 
 export interface Character {
   age: number;
-  class: Class;
+  class: CharacterClass;
   trinket: string;
-  sources: string[];
-  race: Race;
-  subrace: Subrace;
-  raceOther: { name: string, value: string }[];
-  alignment: Alignment;
-  background: Background;
-  backgroundReason: string;
-  backgroundTraits: string[];
-  backgroundIdeal: Ideal;
-  backgroundBond: string;
-  backgroundFlaw: string;
-  backgroundOther: { name: string, value: string }[];
+  race: CharacterRace;
+  alignment: string;
+  background: CharacterBackground;
+  family: CharacterFamily;
+  events: string[];
+}
+
+export interface CharacterFamily {
   knewParents: boolean;
-  classReason: string;
-  classOther: { name: string, value: string }[];
   parents: Parents;
   birthplace: string;
   raisedBy: RaisedBy;
@@ -44,44 +38,80 @@ export interface Character {
   home: string;
   childhood: string;
   siblings: Sibling[];
-  events: string[];
+}
+
+export interface CharacterRace {
+  name: string;
+  subrace: string;
+  other: { name: string, value: string }[];
+}
+
+export interface CharacterClass {
+  name: string;
+  reason: string;
+  other: { name: string, value: string }[];
+}
+
+export interface CharacterBackground {
+  name: string;
+  reason: string;
+  traits: string[];
+  ideal: string;
+  bond: string;
+  flaw: string;
+  other: { name: string, value: string }[];
 }
 
 export class Generator {
+  private alignment: Alignment;
+  private background: Background;
+  private class: Class;
+  private race: Race;
+  private subrace: Subrace;
+  private sourceList: string[];
+
   constructor(private config: Config) { }
 
-  sources(character: Character) {
+  private assignSources() {
     if (this.config.sources) {
-      character.sources = this.config.sources.split(',').map(s => s.trim());
+      this.sourceList = this.config.sources.split(',').map(s => s.trim());
     } else {
-      character.sources = ['PHB', 'VGM', 'XGE'];
+      this.sourceList = ['PHB', 'VGM', 'XGE'];
     }
   }
 
-  race(character: Character) {
+  private assignRace(character: Character) {
     if (this.config.race) {
-      character.race = Races.byName(this.config.race);
+      this.race = Races.byName(this.config.race);
     } else {
-      character.race = Races.random(character.sources);
+      this.race = Races.random(this.sourceList);
     }
 
-    if (character.race.subraces.length > 0) {
-      if (character.subrace) { character.subrace = character.race.subraces.filter(sr => sr.name === this.config.subrace)[0]; }
-      if (!character.subrace) { character.subrace = Races.randomSubrace(character.race); }
+    if (this.race.subraces.length > 0) {
+      if (this.config.subrace) {
+        this.subrace = this.race.subraces.filter(sr => sr.name === this.config.subrace)[0];
+      } else {
+        this.subrace = Races.randomSubrace(this.race);
+      }
     }
 
-    character.raceOther = Races.other(character.race, character.subrace);
+    character.race = {
+      name: this.race.name,
+      subrace: this.subrace ? this.subrace.name : undefined,
+      other: Races.other(this.race, this.subrace)
+    };
   }
 
-  alignment(character: Character) {
+  private assignAlignment(character: Character) {
     if (this.config.alignment) {
-      character.alignment = Alignments.byAbbreviation(character.alignment);
+      this.alignment = Alignments.byAbbreviation(this.config.alignment);
     } else {
-      character.alignment = Alignments.random();
+      this.alignment = Alignments.random();
     }
+    character.alignment = this.alignment.name;
   }
 
-  age(character: Character) {
+  private assignAge(character: Character) {
     if (this.config.age) {
       character.age = character.age;
     } else {
@@ -89,56 +119,63 @@ export class Generator {
     }
   }
 
-  background(character: Character) {
+  private assignBackground(character: Character) {
     if (this.config.background) {
-      character.background = Backgrounds.byName(this.config.background);
+      this.background = Backgrounds.byName(this.config.background);
     } else {
-      character.background = Backgrounds.random(character.sources);
+      this.background = Backgrounds.random(this.sourceList);
     }
-    character.backgroundReason = Backgrounds.reason(character.background);
-    character.backgroundTraits = Backgrounds.traits(character.background);
-    character.backgroundIdeal = Backgrounds.ideal(character.background, character.alignment);
-    character.backgroundBond = Backgrounds.bond(character.background);
-    character.backgroundFlaw = Backgrounds.flaw(character.background);
-    character.backgroundOther = Backgrounds.other(character.background);
+    character.background = {
+      name: this.background.name,
+      reason: Backgrounds.reason(this.background),
+      traits: Backgrounds.traits(this.background),
+      ideal: Backgrounds.ideal(this.background, this.alignment).ideal,
+      bond: Backgrounds.bond(this.background),
+      flaw: Backgrounds.flaw(this.background),
+      other: Backgrounds.other(this.background)
+    };
   }
 
-  adventuringClass(character: Character) {
+  private assignClass(character: Character) {
     if (this.config.class) {
-      character.class = Classes.byName(this.config.class);
+      this.class = Classes.byName(this.config.class);
     } else {
-      character.class = Classes.random(character.sources);
+      this.class = Classes.random(this.sourceList);
     }
-    character.classReason = Classes.reason(character.class);
-    character.classOther = Classes.other(character.class);
+    character.class = {
+      name: this.class.name,
+      reason: Classes.reason(this.class),
+      other: Classes.other(this.class)
+    };
   }
 
-  parents(character: Character) {
-    character.knewParents = Family.knewParents();
-    character.parents = Family.parents(character.race, character.subrace);
-    character.parents.mother.occupation = Life.occupation();
-    character.parents.father.occupation = Life.occupation();
+  private assignFamily(character: Character) {
+    const knewParents = Family.knewParents();
+    const lifestyle = Family.lifestyle();
+    const raisedBy = Family.raisedBy(knewParents);
+    character.family = {
+      knewParents,
+      raisedBy,
+      lifestyle,
+      birthplace: Birth.place(),
+      home: Family.home(lifestyle),
+      childhood: Life.childhood(this.config.charismaModifier || 0),
+      parents: Family.parents(this.race, this.subrace),
+      siblings: []
+    };
+    character.family.parents.mother.occupation = Life.occupation();
+    character.family.parents.father.occupation = Life.occupation();
+    if (raisedBy.absent.includes('mother')) {
+      character.family.parents.mother.absent = Family.absentParent();
+    }
+    if (raisedBy.absent.includes('father')) {
+      character.family.parents.father.absent = Family.absentParent();
+    }
   }
 
-  upbringing(character: Character) {
-    character.birthplace = Birth.place();
-    character.raisedBy = Family.raisedBy(character.knewParents);
-    character.lifestyle = Family.lifestyle();
-    character.home = Family.home(character.lifestyle);
-    character.childhood = Life.childhood(this.config.charismaModifier || 0);
-
-    if (character.raisedBy.absent.includes('mother')) {
-      character.parents.mother.absent = Family.absentParent();
-    }
-    if (character.raisedBy.absent.includes('father')) {
-      character.parents.father.absent = Family.absentParent();
-    }
-  }
-
-  siblings(character: Character) {
-    character.siblings = [];
-    for (let n = 0; n < Family.siblings(character.race); n++) {
-      character.siblings.push({
+  private assignSiblings(character: Character) {
+    for (let n = 0; n < Family.siblings(this.race); n++) {
+      character.family.siblings.push({
         relativeAge: Life.relativeAge(),
         relationship: Family.siblingSex(),
         occupation: Life.occupation(),
@@ -148,7 +185,7 @@ export class Generator {
     }
   }
 
-  events(character: Character) {
+  private assignEvents(character: Character) {
     character.events = [];
     const eventRolls = [];
     for (let n = 0; n < Life.eventCount(character.age); n++) {
@@ -156,23 +193,22 @@ export class Generator {
     }
   }
 
-  trinket(character: Character) {
+  private assignTrinket(character: Character) {
     character.trinket = Items.trinket();
   }
 
-  generator(): Character {
+  generate(): Character {
     const character: Character = Object.assign({});
-    this.sources(character);
-    this.race(character);
-    this.alignment(character);
-    this.age(character);
-    this.background(character);
-    this.adventuringClass(character);
-    this.parents(character);
-    this.siblings(character);
-    this.upbringing(character);
-    this.events(character);
-    this.trinket(character);
+    this.assignSources();
+    this.assignRace(character);
+    this.assignAlignment(character);
+    this.assignAge(character);
+    this.assignBackground(character);
+    this.assignClass(character);
+    this.assignFamily(character);
+    this.assignSiblings(character);
+    this.assignEvents(character);
+    this.assignTrinket(character);
     return character;
   }
 }

@@ -23,7 +23,7 @@ module.exports = function (config) {
     customLaunchers: {
       chrome: {
         base: "Chrome",
-        flags: ["--no-sandbox", "--remote-debugging-port=9333"]
+        flags: ["--remote-debugging-port=9333"]
       }
     },
     karmaTypescriptConfig: {

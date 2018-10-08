@@ -4,7 +4,7 @@ describe('random', () => {
   describe('numberBetween', () => {
     it('should always be between min and max', () => {
       for (let x = 0; x < 100; x++) {
-        const res = Random.numberBetween(1, 10)
+        const res = Random.numberBetween(1, 10);
         expect(res).toBeLessThan(11);
         expect(res).toBeGreaterThan(0);
       }
@@ -23,7 +23,7 @@ describe('random', () => {
   });
   describe('dice', () => {
     it('should roll the right number of times', () => {
-      expect(Random.dice('10d1')).toBe(10)
+      expect(Random.dice('10d1')).toBe(10);
     });
   });
   describe('percent', () => {

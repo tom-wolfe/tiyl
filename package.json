@@ -1,0 +1,56 @@
+{
+  "name": "tiyl",
+  "version": "2.0.0",
+  "description": "Generate character backstories based on the Xanathar's Guide to Everything 'This Is Your Life' tables.",
+  "main": "./dist/index.js",
+  "scripts": {
+    "build": "npm run clean && npm run lint && npm run tsc",
+    "clean": "node ./node_modules/rimraf/bin ./dist && node ./node_modules/rimraf/bin ./coverage",
+    "coverage": "istanbul coverage",
+    "codacy": "cat ./coverage/lcov/lcov.info | codacy-coverage --verbose",
+    "lint": "tslint -p ./tslint.json",
+    "lint:fix": "tslint -p ./tslint.json --fix",
+    "tsc": "tsc --project ./tsconfig.build.json",
+    "test": "npm run lint && karma start --single-run",
+    "test:watch": "karma start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/trwolfe13/tiyl.git"
+  },
+  "keywords": [
+    "xanathar's",
+    "guide",
+    "to",
+    "everything",
+    "dungeons",
+    "dragons",
+    "D&D",
+    "5e",
+    "XGE",
+    "XGtE"
+  ],
+  "author": "Tom Wolfe <trwolfe13@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/trwolfe13/tiyl/issues"
+  },
+  "homepage": "https://github.com/trwolfe13/tiyl#readme",
+  "devDependencies": {
+    "@types/jasmine": "^2.8.6",
+    "@types/random-js": "^1.0.30",
+    "codacy-coverage": "^2.0.2",
+    "istanbul": "^0.4.5",
+    "jasmine-core": "2.5.2",
+    "karma": "^1.7.0",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-jasmine": "^1.1.0",
+    "karma-typescript": "^3.0.4",
+    "rimraf": "^2.6.1",
+    "tslint": "^5.4.3",
+    "typescript": "^2.4.1"
+  },
+  "dependencies": {
+    "random-js": "^1.0.8"
+  }
+}

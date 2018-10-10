@@ -1,4 +1,4 @@
-# TIYL (This Is Your Life)
+# TIYL (This Is Your Life) [![NPM version](https://badge.fury.io/js/tiyl.svg)](http://badge.fury.io/js/tiyl)
 
 [See an interface for this running here](https://trwolfe13.github.io/tiyl)
 

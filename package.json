@@ -1,12 +1,11 @@
 {
   "name": "tiyl",
-  "version": "2.0.0",
+  "version": "1.0.0",
   "description": "Generate character backstories based on the Xanathar's Guide to Everything 'This Is Your Life' tables.",
   "main": "./dist/index.js",
   "scripts": {
     "build": "npm run clean && npm run lint && npm run tsc",
     "clean": "node ./node_modules/rimraf/bin ./dist && node ./node_modules/rimraf/bin ./coverage",
-    "coverage": "istanbul coverage",
     "codacy": "cat ./coverage/lcov/lcov.info | codacy-coverage --verbose",
     "lint": "tslint -p ./tslint.json",
     "lint:fix": "tslint -p ./tslint.json --fix",

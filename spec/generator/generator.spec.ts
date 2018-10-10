@@ -14,6 +14,7 @@ describe('Generator', () => {
         sources: null
       };
       const generator = new Generator(config);
+      generator.generate();
     });
   });
 });

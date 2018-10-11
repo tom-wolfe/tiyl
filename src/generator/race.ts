@@ -4,17 +4,17 @@ import { SourcedData, Sources } from './sources';
 
 export interface Race {
   name: string;
-  parents: ParentChoice[];
   subraces: Subrace[];
-  other: {
+  parents?: ParentChoice[];
+  other?: {
     [name: string]: string[];
   };
 }
 
 export interface Subrace {
   name: string;
-  parents: ParentChoice[];
-  other: {
+  parents?: ParentChoice[];
+  other?: {
     [name: string]: string[];
   };
 }

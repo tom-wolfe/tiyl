@@ -1,6 +1,4 @@
 .vscode
-dist/spec/
-dist/test/
 node_modules/
 spec/
 coverage/

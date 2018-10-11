@@ -70,7 +70,7 @@ export class Generator {
   private subrace: Subrace;
   private sourceList: string[];
 
-  constructor(private config: Config) {
+  constructor(private config?: Config) {
     if (!this.config) {
       this.config = {
         age: null,

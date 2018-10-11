@@ -31,6 +31,6 @@ export class Alignments {
   }
 
   static byAbbreviation(abbreviation): Alignment {
-    return Alignments[abbreviation];
+    return Alignments.data[abbreviation];
   }
 }

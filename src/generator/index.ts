@@ -113,7 +113,7 @@ export class Generator {
 
   private assignAge(character: Character) {
     if (this.config.age) {
-      character.age = character.age;
+      character.age = this.config.age;
     } else {
       character.age = Life.age();
     }

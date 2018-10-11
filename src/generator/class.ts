@@ -18,7 +18,7 @@ export class Classes {
   }
 
   static byName(name: string): Class {
-    return [].concat.apply([], Object.keys(Classes).map(r => Classes[r])).filter(r => r.name === name)[0];
+    return [].concat.apply([], Object.keys(Classes.data).map(r => Classes.data[r])).filter(r => r.name === name)[0];
   }
 
   static random(sources: string | string[] = 'ALL'): Class {

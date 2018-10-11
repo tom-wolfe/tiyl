@@ -29,7 +29,7 @@ export class Backgrounds {
   }
 
   static byName(name: string): Background {
-    return [].concat.apply([], Object.keys(Backgrounds).map(r => Backgrounds[r])).filter(r => r.name === name)[0];
+    return [].concat.apply([], Object.keys(Backgrounds.data).map(r => Backgrounds.data[r])).filter(r => r.name === name)[0];
   }
 
   static reason(background: Background): string {

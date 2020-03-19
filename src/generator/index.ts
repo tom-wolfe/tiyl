@@ -6,6 +6,7 @@ import { Family, Lifestyle, Parents, RaisedBy, Sibling } from './family';
 import { Items } from './item';
 import { Life } from './life';
 import { Races, Race, Subrace } from './race';
+import { Names } from './name';
 
 export interface Config {
   age: number;
@@ -19,6 +20,7 @@ export interface Config {
 }
 
 export interface Character {
+  name: string;
   age: number;
   class: CharacterClass;
   trinket: string;
@@ -113,6 +115,10 @@ export class Generator {
       subrace: this.subrace ? this.subrace.name : undefined,
       other: Races.other(this.race, this.subrace)
     };
+  }
+
+  private assignName(character: Character) {
+    character.name = Names.byRace(character.race.name);
   }
 
   private assignAlignment(character: Character) {
@@ -214,6 +220,7 @@ export class Generator {
     const character: Character = Object.assign({});
     this.assignSources();
     this.assignRace(character);
+    this.assignName(character);
     this.assignAlignment(character);
     this.assignAge(character);
     this.assignBackground(character);

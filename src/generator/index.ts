@@ -1,11 +1,14 @@
 import { Alignment, Alignments } from './alignment';
-import { Backgrounds, Background } from './background';
+import { Background, Backgrounds } from './background';
 import { Birth } from './birth';
-import { Classes, Class } from './class';
+import { Class, Classes } from './class';
 import { Family, Lifestyle, Parents, RaisedBy, Sibling } from './family';
 import { Items } from './item';
 import { Life } from './life';
-import { Races, Race, Subrace } from './race';
+import { Names } from './name';
+import { Race, Races, Subrace } from './race';
+
+export * from './name';
 
 export interface Config {
   age: number;
@@ -19,6 +22,7 @@ export interface Config {
 }
 
 export interface Character {
+  name: string;
   age: number;
   class: CharacterClass;
   trinket: string;
@@ -113,6 +117,10 @@ export class Generator {
       subrace: this.subrace ? this.subrace.name : undefined,
       other: Races.other(this.race, this.subrace)
     };
+  }
+
+  private assignName(character: Character) {
+    character.name = Names.byRace(character.race.subrace || character.race.name).replace(/\b\w/g, n => n.toUpperCase());
   }
 
   private assignAlignment(character: Character) {
@@ -214,6 +222,7 @@ export class Generator {
     const character: Character = Object.assign({});
     this.assignSources();
     this.assignRace(character);
+    this.assignName(character);
     this.assignAlignment(character);
     this.assignAge(character);
     this.assignBackground(character);

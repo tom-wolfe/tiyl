@@ -1,0 +1,51 @@
+{
+  "patterns": [
+    "{name}"
+  ],
+  "placeholders": {
+    "name": {
+      "mode": "itemOrMarkov",
+      "source": [
+        "crelk",
+        "gholk",
+        "droop",
+        "arix",
+        "aks",
+        "galax",
+        "garu",
+        "hagnar",
+        "hox",
+        "irtos",
+        "keshak",
+        "meepo",
+        "molo",
+        "ohsoss",
+        "rotom",
+        "sagin",
+        "sik",
+        "sniv",
+        "taklak",
+        "kod",
+        "rek",
+        "vorn",
+        "tovi",
+        "guba",
+        "vuss",
+        "tak",
+        "kox",
+        "tax",
+        "kon",
+        "rex",
+        "dik",
+        "zir",
+        "maka",
+        "kakra",
+        "kam",
+        "kihro",
+        "kex",
+        "neks",
+        "deekin"
+      ]
+    }
+  }
+}

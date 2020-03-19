@@ -7,7 +7,7 @@ export interface WeightedOption {
 }
 
 export class Random {
-  private static readonly random = new RandomJs(RandomJs.engines.mt19937().autoSeed());
+  private static readonly random = new RandomJs.Random(RandomJs.MersenneTwister19937.autoSeed());
 
   static numberBetween(min: number, max: number) {
     return Random.random.integer(min, max);

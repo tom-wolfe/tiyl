@@ -31,6 +31,7 @@ module.exports = function (config) {
         instrumentation: true
       },
       compilerOptions: {
+        resolveJsonModule: true,
         baseUrl: ".",
         paths: {
           "@tiyl/*": [

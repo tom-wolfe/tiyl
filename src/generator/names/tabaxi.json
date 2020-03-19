@@ -1,9 +1,9 @@
 {
   "patterns": [
     "{fullName}",
-    "{fullName} of the {clanAdjective} {clanNoun}",
+    "{fullName}, of the {clanAdjective} {clanNoun}",
     "{nameAdjective} {nameNoun}",
-    "{nameAdjective} {nameNoun} of the {clanAdjective} {clanNoun}"
+    "{nameAdjective} {nameNoun}, of the {clanAdjective} {clanNoun}"
   ],
   "placeholders": {
     "fullName": {

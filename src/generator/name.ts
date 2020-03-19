@@ -1,4 +1,7 @@
+import { MarkovChain } from 'markov-typescript';
+
 import { Random } from './random';
+import { NameDefinitions } from './names';
 
 export enum PlaceholderMode {
   Item = 'item',
@@ -9,6 +12,7 @@ export enum PlaceholderMode {
 export interface Placeholder {
   mode: PlaceholderMode;
   markovOrder?: number;
+  markovSeparator?: string;
   maxLength?: number;
   source: string[];
 }
@@ -18,12 +22,17 @@ export interface NameDefinition {
   placeholders: { [key: string]: Placeholder };
 }
 
+
+
 export class Names {
   private constructor() { }
 
   static byRace(race: string): string {
-    const raceNames: NameDefinition = undefined; // TODO: Lookup by race.
-    return this.fromDefinition(raceNames);
+    const definitions = NameDefinitions[race];
+    if (!definitions) { return undefined; }
+    
+    const definition = Random.element(definitions);
+    return this.fromDefinition(definition);
   }
 
   static fromDefinition(definition: NameDefinition): string {
@@ -39,6 +48,25 @@ export class Names {
   }
 
   static resolvePlaceholder(placeholder: Placeholder): string {
-    return 'face'; // TODO: Resolve placeholder.
+    switch (placeholder.mode) {
+      case PlaceholderMode.Item: return this.resolveItemPlaceholder(placeholder);
+      case PlaceholderMode.Markov: return this.resolveMarkovPlaceholder(placeholder);
+      default: return this.resolveItemOrMarkovPlaceholder(placeholder);
+    }
+  }
+
+  static resolveItemOrMarkovPlaceholder(placeholder: Placeholder): string {
+    return Random.bool() ? this.resolveItemPlaceholder(placeholder) : this.resolveMarkovPlaceholder(placeholder);
+  }
+
+  static resolveItemPlaceholder(placeholder: Placeholder): string {
+    return Random.element(placeholder.source);
+  }
+
+  static resolveMarkovPlaceholder(placeholder: Placeholder): string {
+    const chain: MarkovChain<string> = new MarkovChain<string>(placeholder.markovOrder || 2);
+    const separator = placeholder.markovSeparator || '';
+    placeholder.source.forEach(n => chain.learn(n.split(separator)));
+    return chain.walk().join(separator);
   }
 }

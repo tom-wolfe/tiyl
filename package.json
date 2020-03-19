@@ -50,6 +50,7 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
+    "markov-typescript": "^1.1.0",
     "random-js": "^2.1.0"
   }
 }

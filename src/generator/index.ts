@@ -9,6 +9,7 @@ import { Names } from './name';
 import { Race, Races, Subrace } from './race';
 
 export * from './name';
+export * from './names';
 
 export interface Config {
   age: number;

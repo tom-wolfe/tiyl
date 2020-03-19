@@ -3,7 +3,7 @@
     "{name}"
   ],
   "placeholders": {
-    "male": {
+    "name": {
       "mode": "itemOrMarkov",
       "source": [
         "acalan",

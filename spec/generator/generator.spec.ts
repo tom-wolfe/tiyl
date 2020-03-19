@@ -4,7 +4,7 @@ describe('Generator', () => {
   describe('generate', () => {
     it('runs without error', () => {
       const config: Config = {
-        race: 'Kobold',
+        race: null,
         subrace: null,
         class: null,
         background: null,
@@ -14,8 +14,9 @@ describe('Generator', () => {
         sources: null
       };
       const generator = new Generator(config);
-      const character = generator.generate();
-      console.log(character.name);
+      for (let x = 0; x < 100; x++) {
+        generator.generate();
+      }
     });
   });
 });

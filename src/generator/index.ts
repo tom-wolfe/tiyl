@@ -66,12 +66,16 @@ export interface CharacterBackground {
   other: { name: string, value: string }[];
 }
 
+export interface GenerateState {
+  alignment: Alignment;
+  background: Background;
+  class: Class;
+  race: Race;
+  subrace: Subrace;
+  character: Character;
+}
+
 export class Generator {
-  private alignment: Alignment;
-  private background: Background;
-  private class: Class;
-  private race: Race;
-  private subrace: Subrace;
   private sourceList: string[];
 
   constructor(private config?: Config) {
@@ -87,6 +91,7 @@ export class Generator {
         charismaModifier: null
       };
     }
+    this.assignSources();
   }
 
   private assignSources() {
@@ -97,107 +102,107 @@ export class Generator {
     }
   }
 
-  private assignRace(character: Character) {
+  private assignRace(state: GenerateState) {
     if (this.config.race) {
-      this.race = Races.byName(this.config.race);
+      state.race = Races.byName(this.config.race);
     } else {
-      this.race = Races.random(this.sourceList);
+      state.race = Races.random(this.sourceList);
     }
 
-    if (this.race.subraces.length > 0) {
+    if (state.race.subraces.length > 0) {
       if (this.config.subrace) {
-        this.subrace = this.race.subraces.filter(sr => sr.name === this.config.subrace)[0];
+        state.subrace = state.race.subraces.filter(sr => sr.name === this.config.subrace)[0];
       } else {
-        this.subrace = Races.randomSubrace(this.race);
+        state.subrace = Races.randomSubrace(state.race);
       }
     }
 
-    character.race = {
-      name: this.race.name,
-      subrace: this.subrace ? this.subrace.name : undefined,
-      other: Races.other(this.race, this.subrace)
+    state.character.race = {
+      name: state.race.name,
+      subrace: state.subrace ? state.subrace.name : undefined,
+      other: Races.other(state.race, state.subrace)
     };
   }
 
-  private assignName(character: Character) {
-    const name = Names.byRace(character.race.subrace || character.race.name);
-    character.name = (name || '').replace(/\b\w/g, n => n.toUpperCase());
+  private assignName(state: GenerateState) {
+    const name = Names.byRace(state.subrace ? state.subrace.name : state.race.name);
+    state.character.name = (name || '').replace(/\b\w/g, n => n.toUpperCase());
   }
 
-  private assignAlignment(character: Character) {
+  private assignAlignment(state: GenerateState) {
     if (this.config.alignment) {
-      this.alignment = Alignments.byAbbreviation(this.config.alignment);
+      state.alignment = Alignments.byAbbreviation(this.config.alignment);
     } else {
-      this.alignment = Alignments.random();
+      state.alignment = Alignments.random();
     }
-    character.alignment = this.alignment.name;
+    state.character.alignment = state.alignment.name;
   }
 
-  private assignAge(character: Character) {
+  private assignAge(state: GenerateState) {
     if (this.config.age) {
-      character.age = this.config.age;
+      state.character.age = this.config.age;
     } else {
-      character.age = Life.age();
+      state.character.age = Life.age();
     }
   }
 
-  private assignBackground(character: Character) {
+  private assignBackground(state: GenerateState) {
     if (this.config.background) {
-      this.background = Backgrounds.byName(this.config.background);
+      state.background = Backgrounds.byName(this.config.background);
     } else {
-      this.background = Backgrounds.random(this.sourceList);
+      state.background = Backgrounds.random(this.sourceList);
     }
-    character.background = {
-      name: this.background.name,
-      reason: Backgrounds.reason(this.background),
-      traits: Backgrounds.traits(this.background),
-      ideal: Backgrounds.ideal(this.background, this.alignment).ideal,
-      bond: Backgrounds.bond(this.background),
-      flaw: Backgrounds.flaw(this.background),
-      other: Backgrounds.other(this.background)
+    state.character.background = {
+      name: state.background.name,
+      reason: Backgrounds.reason(state.background),
+      traits: Backgrounds.traits(state.background),
+      ideal: Backgrounds.ideal(state.background, state.alignment).ideal,
+      bond: Backgrounds.bond(state.background),
+      flaw: Backgrounds.flaw(state.background),
+      other: Backgrounds.other(state.background)
     };
   }
 
-  private assignClass(character: Character) {
+  private assignClass(state: GenerateState) {
     if (this.config.class) {
-      this.class = Classes.byName(this.config.class);
+      state.class = Classes.byName(this.config.class);
     } else {
-      this.class = Classes.random(this.sourceList);
+      state.class = Classes.random(this.sourceList);
     }
-    character.class = {
-      name: this.class.name,
-      reason: Classes.reason(this.class),
-      other: Classes.other(this.class)
+    state.character.class = {
+      name: state.class.name,
+      reason: Classes.reason(state.class),
+      other: Classes.other(state.class)
     };
   }
 
-  private assignFamily(character: Character) {
+  private assignFamily(state: GenerateState) {
     const knewParents = Family.knewParents();
     const lifestyle = Family.lifestyle();
     const raisedBy = Family.raisedBy(knewParents);
-    character.family = {
+    state.character.family = {
       knewParents,
       raisedBy,
       lifestyle,
       birthplace: Birth.place(),
       home: Family.home(lifestyle),
       childhood: Life.childhood(this.config.charismaModifier || 0),
-      parents: Family.parents(this.race, this.subrace),
+      parents: Family.parents(state.race, state.subrace),
       siblings: []
     };
-    character.family.parents.mother.occupation = Life.occupation();
-    character.family.parents.father.occupation = Life.occupation();
+    state.character.family.parents.mother.occupation = Life.occupation();
+    state.character.family.parents.father.occupation = Life.occupation();
     if (raisedBy.absent.includes('mother')) {
-      character.family.parents.mother.absent = Family.absentParent();
+      state.character.family.parents.mother.absent = Family.absentParent();
     }
     if (raisedBy.absent.includes('father')) {
-      character.family.parents.father.absent = Family.absentParent();
+      state.character.family.parents.father.absent = Family.absentParent();
     }
   }
 
-  private assignSiblings(character: Character) {
-    for (let n = 0; n < Family.siblings(this.race); n++) {
-      character.family.siblings.push({
+  private assignSiblings(state: GenerateState) {
+    for (let n = 0; n < Family.siblings(state.race); n++) {
+      state.character.family.siblings.push({
         relativeAge: Life.relativeAge(),
         relationship: Family.siblingSex(),
         occupation: Life.occupation(),
@@ -207,31 +212,38 @@ export class Generator {
     }
   }
 
-  private assignEvents(character: Character) {
-    character.events = [];
+  private assignEvents(state: GenerateState) {
+    state.character.events = [];
     const eventRolls = [];
-    for (let n = 0; n < Life.eventCount(character.age); n++) {
-      character.events.push(Life.event(eventRolls));
+    for (let n = 0; n < Life.eventCount(state.character.age); n++) {
+      state.character.events.push(Life.event(eventRolls));
     }
   }
 
-  private assignTrinket(character: Character) {
-    character.trinket = Items.trinket();
+  private assignTrinket(state: GenerateState) {
+    state.character.trinket = Items.trinket();
   }
 
   generate(): Character {
-    const character: Character = Object.assign({});
-    this.assignSources();
-    this.assignRace(character);
-    this.assignName(character);
-    this.assignAlignment(character);
-    this.assignAge(character);
-    this.assignBackground(character);
-    this.assignClass(character);
-    this.assignFamily(character);
-    this.assignSiblings(character);
-    this.assignEvents(character);
-    this.assignTrinket(character);
-    return character;
+    const state: GenerateState = {
+      alignment: undefined,
+      background: undefined,
+      character: <Character>{},
+      class: undefined,
+      race: undefined,
+      subrace: undefined
+    };
+    this.assignRace(state);
+    this.assignName(state);
+    this.assignAlignment(state);
+    this.assignAge(state);
+    this.assignBackground(state);
+    this.assignClass(state);
+    this.assignFamily(state);
+    this.assignSiblings(state);
+    this.assignEvents(state);
+    this.assignTrinket(state);
+
+    return state.character;
   }
 }

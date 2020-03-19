@@ -37,20 +37,19 @@
   },
   "homepage": "https://github.com/trwolfe13/tiyl#readme",
   "devDependencies": {
-    "@types/jasmine": "^2.8.9",
-    "@types/random-js": "^1.0.31",
-    "codacy-coverage": "^3.1.0",
+    "@types/jasmine": "^3.5.9",
+    "codacy-coverage": "^3.4.0",
     "istanbul": "^0.4.5",
-    "jasmine-core": "^3.2.1",
-    "karma": "^3.0.0",
-    "karma-chrome-launcher": "^2.2.0",
-    "karma-jasmine": "^1.1.2",
-    "karma-typescript": "^3.0.13",
-    "rimraf": "^2.6.2",
-    "tslint": "^5.11.0",
-    "typescript": "^3.1.2"
+    "jasmine-core": "^3.5.0",
+    "karma": "^4.4.1",
+    "karma-chrome-launcher": "^3.1.0",
+    "karma-jasmine": "^3.1.1",
+    "karma-typescript": "^5.0.0",
+    "rimraf": "^3.0.2",
+    "tslint": "^6.1.0",
+    "typescript": "^3.8.3"
   },
   "dependencies": {
-    "random-js": "^1.0.8"
+    "random-js": "^2.1.0"
   }
 }

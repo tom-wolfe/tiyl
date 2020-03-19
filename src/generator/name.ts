@@ -49,11 +49,11 @@ export class Names {
     switch (placeholder.mode) {
       case PlaceholderMode.Item: return this.resolveItemPlaceholder(placeholder);
       case PlaceholderMode.Markov: return this.resolveMarkovPlaceholder(placeholder);
-      default: return this.resolveItemOrMarkovPlaceholder(placeholder);
+      default: return this.resolveitemOrMarkovPlaceholder(placeholder);
     }
   }
 
-  static resolveItemOrMarkovPlaceholder(placeholder: Placeholder): string {
+  static resolveitemOrMarkovPlaceholder(placeholder: Placeholder): string {
     return Random.bool() ? this.resolveItemPlaceholder(placeholder) : this.resolveMarkovPlaceholder(placeholder);
   }
 

@@ -5,7 +5,7 @@
   ],
   "placeholders": {
     "male": {
-      "mode": "markovOrItem",
+      "mode": "itemOrMarkov",
       "source": [
         "abzag",
         "abzrolg",
@@ -747,7 +747,7 @@
       ]
     },
     "female": {
-      "mode": "markovOrItem",
+      "mode": "itemOrMarkov",
       "source": [
         "abimfash",
         "adkul",
@@ -1291,7 +1291,7 @@
       ]
     },
     "surname": {
-      "mode": "markovOrItem",
+      "mode": "itemOrMarkov",
       "source": [
         "agadbu",
         "agamph",

@@ -5,7 +5,7 @@
   ],
   "placeholders": {
     "maleP": {
-      "mode": "markovOrItem",
+      "mode": "itemOrMarkov",
       "source": [
         "ag",
         "apa",
@@ -40,7 +40,7 @@
       ]
     },
     "maleS": {
-      "mode": "markovOrItem",
+      "mode": "itemOrMarkov",
       "source": [
         "gak",
         "gal",
@@ -85,7 +85,7 @@
       ]
     },
     "femaleP": {
-      "mode": "markovOrItem",
+      "mode": "itemOrMarkov",
       "source": [
         "age",
         "ane",
@@ -120,7 +120,7 @@
       ]
     },
     "femaleS": {
-      "mode": "markovOrItem",
+      "mode": "itemOrMarkov",
       "source": [
         "gea",
         "geo",
@@ -165,7 +165,7 @@
       ]
     },
     "surname": {
-      "mode": "markovOrItem",
+      "mode": "itemOrMarkov",
       "source": [
         "achebe",
         "ademola",

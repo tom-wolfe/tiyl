@@ -5,7 +5,7 @@
   ],
   "placeholders": {
     "male": {
-      "mode": "markovOrItem",
+      "mode": "itemOrMarkov",
       "source": [
         "aaron",
         "adam",
@@ -138,7 +138,7 @@
       ]
     },
     "female": {
-      "mode": "markovOrItem",
+      "mode": "itemOrMarkov",
       "source": [
         "abbie",
         "abby",
@@ -500,7 +500,7 @@
       ]
     },
     "surnameS": {
-      "mode": "markovOrItem",
+      "mode": "itemOrMarkov",
       "source": [
         "arm",
         "arrow",

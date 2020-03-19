@@ -7,7 +7,7 @@
   ],
   "placeholders": {
     "name": {
-      "mode": "markovOrItem",
+      "mode": "itemOrMarkov",
       "source": [
         "amusei",
         "aseepa",
@@ -421,7 +421,7 @@
       ]
     },
     "maleP": {
-      "mode": "markovOrItem",
+      "mode": "itemOrMarkov",
       "source": [
         "abijoo",
         "ah",
@@ -572,7 +572,7 @@
       ]
     },
     "maleS": {
-      "mode": "markovOrItem",
+      "mode": "itemOrMarkov",
       "source": [
         "anoo",
         "beekus",
@@ -687,7 +687,7 @@
       ]
     },
     "femaleP": {
-      "mode": "markovOrItem",
+      "mode": "itemOrMarkov",
       "source": [
         "adzi",
         "ah",
@@ -835,7 +835,7 @@
       ]
     },
     "femaleS": {
-      "mode": "markovOrItem",
+      "mode": "itemOrMarkov",
       "source": [
         "azza",
         "beekus",
@@ -956,7 +956,7 @@
       ]
     },
     "common": {
-      "mode": "markovOrItem",
+      "mode": "itemOrMarkov",
       "markovOrder": 1,
       "separator": "-",
       "source": [

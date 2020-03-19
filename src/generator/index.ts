@@ -1,12 +1,14 @@
 import { Alignment, Alignments } from './alignment';
-import { Backgrounds, Background } from './background';
+import { Background, Backgrounds } from './background';
 import { Birth } from './birth';
-import { Classes, Class } from './class';
+import { Class, Classes } from './class';
 import { Family, Lifestyle, Parents, RaisedBy, Sibling } from './family';
 import { Items } from './item';
 import { Life } from './life';
-import { Races, Race, Subrace } from './race';
 import { Names } from './name';
+import { Race, Races, Subrace } from './race';
+
+export * from './name';
 
 export interface Config {
   age: number;

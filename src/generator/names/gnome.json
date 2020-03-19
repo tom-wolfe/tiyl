@@ -5,7 +5,7 @@
   ],
   "placeholders": {
     "m1": {
-      "mode": "markovOrItem",
+      "mode": "itemOrMarkov",
       "source": [
         "al",
         "ari",
@@ -66,7 +66,7 @@
       ]
     },
     "m2": {
-      "mode": "markovOrItem",
+      "mode": "itemOrMarkov",
       "source": [
         "bar",
         "ben",
@@ -117,7 +117,7 @@
       ]
     },
     "f1": {
-      "mode": "markovOrItem",
+      "mode": "itemOrMarkov",
       "source": [
         "alu",
         "ari",
@@ -178,7 +178,7 @@
       ]
     },
     "f2": {
-      "mode": "markovOrItem",
+      "mode": "itemOrMarkov",
       "source": [
         "bi",
         "bys",

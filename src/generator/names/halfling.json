@@ -5,7 +5,7 @@
   ],
   "placeholders": {
     "male": {
-      "mode": "markovOrItem",
+      "mode": "itemOrMarkov",
       "source": [
         "adelard",
         "adelbert",
@@ -197,7 +197,7 @@
       ]
     },
     "female": {
-      "mode": "markovOrItem",
+      "mode": "itemOrMarkov",
       "source": [
         "adaldrida",
         "alfrida",
@@ -373,7 +373,7 @@
       ]
     },
     "surnameS": {
-      "mode": "markovOrItem",
+      "mode": "itemOrMarkov",
       "source": [
         "bairn",
         "blower",

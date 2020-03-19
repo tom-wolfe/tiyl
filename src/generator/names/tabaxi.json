@@ -7,7 +7,7 @@
   ],
   "placeholders": {
     "fullName": {
-      "mode": "item",
+      "mode": "itemOrMarkov",
       "source": [
         "afternoon nap (nap)",
         "animal in the woods (woods)",

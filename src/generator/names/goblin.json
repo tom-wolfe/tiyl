@@ -4,7 +4,7 @@
   ],
   "placeholders": {
     "prefix": {
-      "mode": "markovOrItem",
+      "mode": "itemOrMarkov",
       "source": [
         "ad",
         "ag",
@@ -54,7 +54,7 @@
       ]
     },
     "suffix": {
-      "mode": "markovOrItem",
+      "mode": "itemOrMarkov",
       "source": [
         "git",
         "gok",

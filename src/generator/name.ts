@@ -22,15 +22,13 @@ export interface NameDefinition {
   placeholders: { [key: string]: Placeholder };
 }
 
-
-
 export class Names {
   private constructor() { }
 
   static byRace(race: string): string {
     const definitions = NameDefinitions[race];
     if (!definitions) { return undefined; }
-    
+
     const definition = Random.element(definitions);
     return this.fromDefinition(definition);
   }

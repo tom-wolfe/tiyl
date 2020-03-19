@@ -120,7 +120,8 @@ export class Generator {
   }
 
   private assignName(character: Character) {
-    character.name = Names.byRace(character.race.subrace || character.race.name).replace(/\b\w/g, n => n.toUpperCase());
+    const name = Names.byRace(character.race.subrace || character.race.name);
+    character.name = (name || '').replace(/\b\w/g, n => n.toUpperCase());
   }
 
   private assignAlignment(character: Character) {
